@@ -25,7 +25,7 @@ class Play extends Phaser.Scene {
     
     }
     update() {
-        this.knight.angle += 1;
+        //this.knight.angle += 1;
         this.knight.torso.angle += 1;
     }
 }
