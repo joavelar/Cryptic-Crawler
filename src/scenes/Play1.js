@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
-        this.knight.setPosition(100,100);
+        this.knight.setPosition(15, 480-(borderPadding*3)-5);
         this.add.existing(this.knight);
     
     }
