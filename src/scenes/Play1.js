@@ -16,12 +16,13 @@ class Play extends Phaser.Scene {
         //second level
         this.add.rectangle(0, 320, game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
         //upper level
-        this.add.rectangle(0, 190, game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
+        this.add.rectangle(0, 197, game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
 
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
         this.knight.setPosition(15, 438);
-        console.log(480-(borderPadding*3)-5);
+        console.log('height of level 1',480-(borderPadding*3));
+        console.log(this.knight.Lives);
         this.add.existing(this.knight);
     
     }
