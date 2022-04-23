@@ -41,6 +41,8 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(550, borderPadding*2, this.p1Score, scoreConfig);
+
+        this.healthLeft = this.add.text(350, borderPadding*2, this.knight.Lives, scoreConfig);
         
     
     }
@@ -52,5 +54,9 @@ class Play extends Phaser.Scene {
         this.p1Score +=1;
         console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
+        if(this.p1Score == 1000){
+            this.knight.Lives -= 1;
+            this.healthLeft.text = this.knight.Lives;
+        }
     }
 }
