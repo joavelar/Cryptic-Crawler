@@ -9,10 +9,10 @@ class Knight extends Phaser.GameObjects.Container {
     }
     
     update() {
-        if(Phaser.Input.Keyboard.JustDown(keyW)) {//&& this.y == 438
+        if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
             this.y -= 123;
             console.log(this.y);
-        }else if (Phaser.Input.Keyboard.JustDown(keyS)) {
+        }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
             this.y += 123;
             console.log(this.y)
         }
