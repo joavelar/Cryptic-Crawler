@@ -3,7 +3,14 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
+    preload() {
+        //load image/tile sprites
+        this.load.image('background', './asset/Enviroment/Background.png');
+    }
+
     create() {
+        //place tile sprite
+        this.background = this.add.tileSprite(0, 0, 720, 480, 'background').setOrigin(0, 0);
         //define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -47,6 +54,9 @@ class Play extends Phaser.Scene {
     
     }
     update() {
+        //move tile from right to left
+        this.background.tilePositionX += 1.5;
+
         //this.knight.angle += 1;
         //this.knight.torso.angle += 1; moves the upper torso
         //this.knight.y -= 1;
