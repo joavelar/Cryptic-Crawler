@@ -24,6 +24,24 @@ class Play extends Phaser.Scene {
         console.log('height of level 1',480-(borderPadding*3));
         console.log(this.knight.Lives);
         this.add.existing(this.knight);
+
+        // initialize score
+        this.p1Score = 0;
+        //display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(550, borderPadding*2, this.p1Score, scoreConfig);
+        
     
     }
     update() {
@@ -31,5 +49,8 @@ class Play extends Phaser.Scene {
         //this.knight.torso.angle += 1; moves the upper torso
         //this.knight.y -= 1;
         this.knight.update()
+        this.p1Score +=1;
+        console.log(this.p1Score)
+        this.scoreLeft.text = this.p1Score;
     }
 }
