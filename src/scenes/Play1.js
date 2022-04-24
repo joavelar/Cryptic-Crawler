@@ -142,8 +142,8 @@ class Play extends Phaser.Scene {
 
         //check collision with obstacle
         if(this.checkCollision(this.knight, this.beartrap1)){
-            this.knight.Lives = this.knight.Lives-1/60;
-            this.healthLeft.text = this.knight.Lives;
+            // this.knight.Lives = this.knight.Lives-1/60;
+            // this.healthLeft.text = this.knight.Lives;
             //this.knight.reset();
             
             //this.shipExplode(this.ship03);
@@ -175,5 +175,8 @@ class Play extends Phaser.Scene {
             trap.alpha = 1;
             snap.destroy();
         })
+
+        this.knight.Lives -= 1;
+        this.healthLeft.text = this.knight.Lives;
     }
 }
