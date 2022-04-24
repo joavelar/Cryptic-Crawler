@@ -23,4 +23,9 @@ class Knight extends Phaser.GameObjects.Container {
         //}
     }
 
+    reset() {
+        this.y = this.y; 
+        this.x = this.x;
+    }
+
 }

@@ -129,5 +129,25 @@ class Play extends Phaser.Scene {
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives;
         }
+
+        //check collision with obstacle
+        if(this.checkCollision(this.knight, this.beartrap1)){
+            this.knight.reset();
+            //this.shipExplode(this.ship03);
+            console.log('hit beartarap');
+        }
+    }
+
+    checkCollision(knight, trap) {
+        // simple AABB checking
+        if (knight.x < trap.x + trap.width &&
+            knight.x + knight.width > trap.x &&
+            knight.y < trap.y + trap.height &&
+            knight.height + knight.y > trap.y) {
+                return true;
+            }
+        else {
+            return false;
+        }
     }
 }
