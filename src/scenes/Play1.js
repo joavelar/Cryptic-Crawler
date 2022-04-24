@@ -4,13 +4,20 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        //load image/tile sprites
+        //load background image
         this.load.image('background', './asset/Enviroment/Background.png');
+
+        //load platform image
+        this.load.image('upperPlatform', './asset/Enviroment/PlatformLanes TopNMid.png')
+        this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
     }
 
     create() {
         //place tile sprite
         this.background = this.add.tileSprite(0, 0, 720, 480, 'background').setOrigin(0, 0);
+        
+
+
         //define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -19,11 +26,11 @@ class Play extends Phaser.Scene {
         this.add.text(20, 20, "cryptic crawler play scene1");
         this.add.rectangle(10, borderPadding, game.config.width - 20, borderUISize*1.8, 0x767676).setOrigin(0, 0);
         //lower level start level
-        this.add.rectangle(0, 480-(borderPadding*3), game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
+        this.lowPlatform = this.add.tileSprite(0, 448, 0, 480, 'lowerPlatform').setOrigin(0,0);
         //second level
-        this.add.rectangle(0, 320, game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
+        this.midPlatform = this.add.tileSprite(0, 324, 0, 480, 'upperPlatform').setOrigin(0,0);
         //upper level
-        this.add.rectangle(0, 197, game.config.width, borderPadding*2, 0x00FF00).setOrigin(0, 0);
+        this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
 
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
@@ -31,6 +38,13 @@ class Play extends Phaser.Scene {
         console.log('height of level 1',480-(borderPadding*3));
         console.log(this.knight.Lives);
         this.add.existing(this.knight);
+
+        //make the monster
+        //For some reason Monster is not defined?
+        
+        this.monster = new Monster(this, 300, 100);
+        this.monster.setPosition(600,438);
+        this.add.existing(this.monster);
 
         // initialize score
         this.p1Score = 0;
@@ -56,6 +70,12 @@ class Play extends Phaser.Scene {
     update() {
         //move tile from right to left
         this.background.tilePositionX += 1.5;
+
+        //move platform to right to left
+        this.lowPlatform.tilePositionX += 1.5;
+        this.midPlatform.tilePositionX += 1.5;
+        this.hiPlatform.tilePositionX += 1.5;
+        this.monster.update();
 
         //this.knight.angle += 1;
         //this.knight.torso.angle += 1; moves the upper torso
