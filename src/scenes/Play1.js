@@ -12,11 +12,20 @@ class Play extends Phaser.Scene {
         this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
     }
 
+    getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+        return Math.floor(Math.random() * max);
+      }
+
     create() {
         //place tile sprite
         this.background = this.add.tileSprite(0, 0, 720, 480, 'background').setOrigin(0, 0);
         
-
+        //for random lanes
+        let Lanes = [438,192,315];
+        console.log(Lanes[this.getRandomInt(3)])
+        // function getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+        //     return Math.floor(Math.random() * max);
+        //   }
 
         //define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -35,15 +44,15 @@ class Play extends Phaser.Scene {
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
         this.knight.setPosition(15, 438);
-        console.log('height of level 1',480-(borderPadding*3));
-        console.log(this.knight.Lives);
+        //console.log('height of level 1',480-(borderPadding*3));
+        //console.log(this.knight.Lives);
         this.add.existing(this.knight);
 
         //make the monster
         //For some reason Monster is not defined?
         
         this.monster = new Monster(this, 300, 100);
-        this.monster.setPosition(600,438);
+        this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
         this.add.existing(this.monster);
 
         // initialize score
@@ -71,6 +80,8 @@ class Play extends Phaser.Scene {
         //move tile from right to left
         this.background.tilePositionX += 1.5;
 
+        this.monster.x -= 1;
+
         //move platform to right to left
         this.lowPlatform.tilePositionX += 1.5;
         this.midPlatform.tilePositionX += 1.5;
@@ -82,7 +93,7 @@ class Play extends Phaser.Scene {
         //this.knight.y -= 1;
         this.knight.update()
         this.p1Score +=1;
-        console.log(this.p1Score)
+        //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 1000){
             this.knight.Lives -= 1;
