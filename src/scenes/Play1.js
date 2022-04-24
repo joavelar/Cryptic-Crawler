@@ -71,7 +71,7 @@ class Play extends Phaser.Scene {
         this.add.existing(this.knight);
 
         //add beartrap
-        this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)], 'beartrap', 0).setOrigin(0, 0);
+        this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)]-10, 'beartrap', 0).setOrigin(0, 0);
         //make the monster
         //For some reason Monster is not defined?
         this.monster = new Monster(this, 300, 100);

@@ -15,7 +15,7 @@ class Beartrap extends Phaser.GameObjects.Sprite{
         this.x -= this.moveSpeed;
         //wrap around left
         if(this.x <= 0 - this.width){
-            this.y = Lanes[this.getRandomInt(3)]
+            this.y = Lanes[this.getRandomInt(3)]-10
             this.x = game.config.width;
         }
     }
