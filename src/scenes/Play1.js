@@ -13,7 +13,10 @@ class Play extends Phaser.Scene {
 
         //knight image
         this.load.spritesheet('kTorso', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
-        frameHieght: 128, startFrame: 0, endFrame: 4})
+        frameHieght: 128, startFrame: 0, endFrame: 4});
+        //beartrap spritesheet
+        this.load.spritesheet('trap', './asset/EnemyAssets/BeartrapSheet.png', {frameWidth: 64,
+        frameHieght: 32, startFrame: 0, endFrame: 4});
 
         //load beartrap
         this.load.image('beartrap', './asset/EnemyAssets/Beartrap.png');
@@ -48,7 +51,7 @@ class Play extends Phaser.Scene {
         //upper level
         this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
 
-        //animation config
+        //animation for run 
         this.anims.create({
             key: 'run',
             frames: this.anims.generateFrameNumbers('kTorso', {start:0, end: 4, first:
@@ -57,6 +60,13 @@ class Play extends Phaser.Scene {
             repeat: -1
         })
         
+        //animation for beartrap 
+        this.anims.create({
+            key: 'btrap',
+            frames: this.anims.generateFrameNumbers('trap', {start:0, end: 4, first:
+            0}),
+            frameRate: 5
+        })
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
 
@@ -132,8 +142,12 @@ class Play extends Phaser.Scene {
 
         //check collision with obstacle
         if(this.checkCollision(this.knight, this.beartrap1)){
-            this.knight.reset();
+            this.knight.Lives = this.knight.Lives-1/60;
+            this.healthLeft.text = this.knight.Lives;
+            //this.knight.reset();
+            
             //this.shipExplode(this.ship03);
+            this.trapFunc(this.beartrap1)
             console.log('hit beartarap');
         }
     }
@@ -149,5 +163,17 @@ class Play extends Phaser.Scene {
         else {
             return false;
         }
+    }
+
+    trapFunc(trap){
+        trap.alpha = 0;
+        //create
+        let snap = this.add.sprite(trap.x, trap.y, 'beartrap').setOrigin(0, 0);
+        snap.anims.play('btrap');
+        snap.on('animationcomplete', () => {
+            trap.reset();
+            trap.alpha = 1;
+            snap.destroy();
+        })
     }
 }

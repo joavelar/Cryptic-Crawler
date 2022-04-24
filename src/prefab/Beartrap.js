@@ -19,4 +19,10 @@ class Beartrap extends Phaser.GameObjects.Sprite{
             this.x = game.config.width;
         }
     }
+
+    reset(){
+        let Lanes = [438,192,315];
+        this.y = Lanes[this.getRandomInt(3)]-10
+        this.x = game.config.width;
+    }
 }
