@@ -14,6 +14,9 @@ class Play extends Phaser.Scene {
         //knight image
         this.load.spritesheet('kTorso', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4})
+
+        //load beartrap
+        this.load.image('beartrap', './asset/EnemyAssets/Beartrap.png');
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -67,9 +70,10 @@ class Play extends Phaser.Scene {
         //console.log(this.knight.Lives);
         this.add.existing(this.knight);
 
+        //add beartrap
+        this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)], 'beartrap', 0).setOrigin(0, 0);
         //make the monster
         //For some reason Monster is not defined?
-        
         this.monster = new Monster(this, 300, 100);
         this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
         this.add.existing(this.monster);
@@ -99,6 +103,8 @@ class Play extends Phaser.Scene {
         //move tile from right to left
         this.background.tilePositionX += 1.5;
 
+        //update beartrap
+        this.beartrap1.update();
         this.monster.x -= 1;
 
         //move platform to right to left
@@ -116,7 +122,7 @@ class Play extends Phaser.Scene {
         // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.knight.torso.y <= 437) {
         //     this.knight.torso.y += 123;
         // }
-        // this.p1Score +=1;
+        this.p1Score +=1;
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 1000){
