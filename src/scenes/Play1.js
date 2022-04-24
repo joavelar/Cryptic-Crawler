@@ -10,6 +10,10 @@ class Play extends Phaser.Scene {
         //load platform image
         this.load.image('upperPlatform', './asset/Enviroment/PlatformLanes TopNMid.png')
         this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
+
+        //knight image
+        this.load.spritesheet('kTorso', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
+        frameHieght: 128, startFrame: 0, endFrame: 4})
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -41,9 +45,24 @@ class Play extends Phaser.Scene {
         //upper level
         this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
 
+        //animation config
+        this.anims.create({
+            key: 'run',
+            frames: this.anims.generateFrameNumbers('kTorso', {start:0, end: 4, first:
+            0}),
+            frameRate: 7,
+            repeat: -1
+        })
+        
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this, 100, 100);
+
         this.knight.setPosition(15, 438);
+
+        //this.knight.torso = this.add.sprite(this.knight.x, this.knight.y-100, 'kTorso').setOrigin(0, 0);
+        //this.knight.torso.anims.play('run');//this.add.tileSprite(this.knight.x, this.knight.y, 640, 128, 'kTorso').setOrigin(0,0);
+        //console.log(this.knight.torso);
+
         //console.log('height of level 1',480-(borderPadding*3));
         //console.log(this.knight.Lives);
         this.add.existing(this.knight);
@@ -92,7 +111,12 @@ class Play extends Phaser.Scene {
         //this.knight.torso.angle += 1; moves the upper torso
         //this.knight.y -= 1;
         this.knight.update()
-        this.p1Score +=1;
+        // if(Phaser.Input.Keyboard.JustDown(keyW) && this.knight.torso.y >= 193) {//&& this.y == 438
+        //     this.knight.torso.y -= 123;
+        // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.knight.torso.y <= 437) {
+        //     this.knight.torso.y += 123;
+        // }
+        // this.p1Score +=1;
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 1000){
