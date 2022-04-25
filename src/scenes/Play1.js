@@ -137,7 +137,7 @@ class Play extends Phaser.Scene {
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 1000){
             this.knight.Lives -= 1;
-            this.healthLeft.text = this.knight.Lives;
+            this.healthLeft.text = Math.floor(this.knight.Lives);
         }
 
         //check collision with obstacle
@@ -176,7 +176,7 @@ class Play extends Phaser.Scene {
             snap.destroy();
         })
 
-        this.knight.Lives -= 1;
-        this.healthLeft.text = this.knight.Lives;
+        this.knight.Lives -= 1/64;
+        this.healthLeft.text = Math.floor(this.knight.Lives);
     }
 }
