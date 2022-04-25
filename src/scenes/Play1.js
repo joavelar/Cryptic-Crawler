@@ -168,15 +168,16 @@ class Play extends Phaser.Scene {
     trapFunc(trap){
         trap.alpha = 0;
         //create
-        let snap = this.add.sprite(trap.x, trap.y, 'beartrap').setOrigin(0, 0);
+        let snap = this.add.sprite(trap.x-27, trap.y, 'beartrap').setOrigin(0, 0);
         snap.anims.play('btrap');
         snap.on('animationcomplete', () => {
             trap.reset();
             trap.alpha = 1;
             snap.destroy();
         })
+        trap.reset();
 
-        this.knight.Lives -= 1/64;
+        this.knight.Lives -= 1;
         this.healthLeft.text = Math.floor(this.knight.Lives);
     }
 }
