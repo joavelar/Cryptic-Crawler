@@ -12,8 +12,11 @@ class Play extends Phaser.Scene {
         this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
 
         //knight image
+        this.load.spritesheet('Arms', './asset/PlayerAssets/PlayerArmsAndHead.png', {frameWidth: 192,
+        frameHieght: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
+        
         //beartrap spritesheet
         this.load.spritesheet('trap', './asset/EnemyAssets/BeartrapSheet.png', {frameWidth: 64,
         frameHieght: 32, startFrame: 0, endFrame: 4});
@@ -74,9 +77,7 @@ class Play extends Phaser.Scene {
 
         this.knight.scale = 0.5;
 
-        //this.knight.legs = this.add.sprite(this.knight.x, this.knight.y-100, 'Legs').setOrigin(0, 0);
-        this.knight.legs.anims.play('run');//this.add.tileSprite(this.knight.x, this.knight.y, 640, 128, 'Legs').setOrigin(0,0);
-        //console.log(this.knight.torso);
+        this.knight.legs.anims.play('run');
 
         //console.log('height of level 1',480-(borderPadding*3));
         //console.log(this.knight.Lives);
