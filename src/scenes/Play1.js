@@ -12,7 +12,7 @@ class Play extends Phaser.Scene {
         this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
 
         //knight image
-        this.load.spritesheet('kTorso', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
+        this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
         //beartrap spritesheet
         this.load.spritesheet('trap', './asset/EnemyAssets/BeartrapSheet.png', {frameWidth: 64,
@@ -54,7 +54,7 @@ class Play extends Phaser.Scene {
         //animation for run 
         this.anims.create({
             key: 'run',
-            frames: this.anims.generateFrameNumbers('kTorso', {start:0, end: 4, first:
+            frames: this.anims.generateFrameNumbers('Legs', {start:0, end: 4, first:
             0}),
             frameRate: 7,
             repeat: -1
@@ -68,12 +68,14 @@ class Play extends Phaser.Scene {
             frameRate: 5
         })
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
-        this.knight = new Knight(this, 100, 100);
+        this.knight = new Knight(this);
 
         this.knight.setPosition(15, 438);
 
-        //this.knight.torso = this.add.sprite(this.knight.x, this.knight.y-100, 'kTorso').setOrigin(0, 0);
-        //this.knight.torso.anims.play('run');//this.add.tileSprite(this.knight.x, this.knight.y, 640, 128, 'kTorso').setOrigin(0,0);
+        this.knight.scale = 0.5;
+
+        //this.knight.legs = this.add.sprite(this.knight.x, this.knight.y-100, 'Legs').setOrigin(0, 0);
+        this.knight.legs.anims.play('run');//this.add.tileSprite(this.knight.x, this.knight.y, 640, 128, 'Legs').setOrigin(0,0);
         //console.log(this.knight.torso);
 
         //console.log('height of level 1',480-(borderPadding*3));
@@ -126,7 +128,7 @@ class Play extends Phaser.Scene {
         this.monster.update();
 
         //this.knight.angle += 1;
-        //this.knight.torso.angle += 1; moves the upper torso
+        //this.knight.torso.angle += 1; //moves the upper torso
         //this.knight.y -= 1;
         this.knight.update()
         // if(Phaser.Input.Keyboard.JustDown(keyW) && this.knight.torso.y >= 193) {//&& this.y == 438
