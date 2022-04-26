@@ -87,6 +87,8 @@ class Play extends Phaser.Scene {
         this.monster = new Monster(this, 300, 100);
         this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
         this.add.existing(this.monster);
+        console.log('width',this.monster.width);
+        console.log('height',this.monster.height);
 
         // initialize score
         this.p1Score = 0;
@@ -150,14 +152,17 @@ class Play extends Phaser.Scene {
             this.trapFunc(this.beartrap1)
             console.log('hit beartarap');
         }
+        if(this.checkCollision(this.knight,this.monster)) {
+            console.log('hit monster');
+        }
     }
 
-    checkCollision(knight, trap) {
+    checkCollision(knight, obs) {
         // simple AABB checking
-        if (knight.x < trap.x + trap.width &&
-            knight.x + knight.width > trap.x &&
-            knight.y < trap.y + trap.height &&
-            knight.height + knight.y > trap.y) {
+        if (knight.x < obs.x + obs.width &&
+            knight.x + knight.width > obs.x &&
+            knight.y < obs.y + obs.height &&
+            knight.height + knight.y > obs.y) {
                 return true;
             }
         else {
