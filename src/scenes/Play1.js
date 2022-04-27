@@ -63,10 +63,9 @@ class Play extends Phaser.Scene {
             key: 'run',
             frames: this.anims.generateFrameNumbers('Legs', {start:0, end: 4, first:
             0}),
-            frameRate: 7,
+            frameRate: 12,
             repeat: -1
         })
-        
         //animation for beartrap 
         this.anims.create({
             key: 'btrap',
