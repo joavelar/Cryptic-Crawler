@@ -17,6 +17,10 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
         
+        //ground enemy
+        this.load.spritesheet('monster', './asset/EnemyAssets/EnemySheet.png', {frameWidth: 128,
+        frameHieght: 128, startFrame: 0, endFrame: 4});
+
         //beartrap spritesheet
         this.load.spritesheet('trap', './asset/EnemyAssets/BeartrapSheet.png', {frameWidth: 64,
         frameHieght: 32, startFrame: 0, endFrame: 4});
@@ -70,6 +74,15 @@ class Play extends Phaser.Scene {
             0}),
             frameRate: 5
         })
+
+        //animation for monster
+        this.anims.create({
+            key: 'crawl',
+            frames: this.anims.generateFrameNumbers('monster', {start:0, end: 4, first:
+            0}),
+            frameRate: 6,
+            repeat: -1
+        })
         //this.player1 = this.add.rectangle(10, 480-(borderPadding*3)- 10, 10, 10, 0xFFF).setOrigin(0.5);
         this.knight = new Knight(this);
 
@@ -88,7 +101,9 @@ class Play extends Phaser.Scene {
         //make the monster
         //For some reason Monster is not defined?
         this.monster = new Monster(this, 300, 100);
+        this.monster.scale = 0.65;
         this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
+        this.monster.body.play('crawl')
         this.add.existing(this.monster);
         console.log('width',this.monster.width);
         console.log('height',this.monster.height);

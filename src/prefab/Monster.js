@@ -1,11 +1,9 @@
 class Monster extends Phaser.GameObjects.Container{
     constructor(scene){
         super(scene);
-        this.isSwinging = false;      //swinging weapon
-        this.torso = new Phaser.GameObjects.Rectangle(scene, 0, -5, 10, 10, 0x0000FF);
-        this.legs = new Phaser.GameObjects.Rectangle(scene, 0, 5, 10, 10, 0x00FF00);
-        this.add(this.torso);
-        this.add(this.legs);
+        this.body = scene.add.sprite(-40, -100, 'monster').setOrigin(0, 0);
+        //new Phaser.GameObjects.Rectangle(scene, 0, -5, 10, 10, 0x0000FF);
+        this.add(this.body);
         this.moveSpeed = 1.5
     }
 
