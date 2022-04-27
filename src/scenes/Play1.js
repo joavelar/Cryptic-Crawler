@@ -41,6 +41,7 @@ class Play extends Phaser.Scene {
     addFlying() {
         let Lanes = [438,192,315];
         this.flying = new Flying(this, game.config.width, Lanes[this.getRandomInt(3)], 'flyMonster');
+        console.log('fwidth:', this.flying.width);
 
     }
 
@@ -147,10 +148,10 @@ class Play extends Phaser.Scene {
 
         //update beartrap
         this.beartrap1.update();
-        if(this.p1Score == 1000){
+        if(this.p1Score == 5000){
             this.addFlying();
             this.flying.update();
-        }if(this.p1Score > 1000) {
+        }if(this.p1Score > 5000) {
             this.flying.update();
         }
         
