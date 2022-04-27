@@ -27,11 +27,22 @@ class Play extends Phaser.Scene {
 
         //load beartrap
         this.load.image('beartrap', './asset/EnemyAssets/Beartrap.png');
+
+        //load flying enemy 
+        this.load.spritesheet('flyMonster', './asset/EnemyAssets/FlyingEnemySheet.png',{frameWidth: 128,
+        frameHieght: 128, startFrame: 0, endFrame:4});
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
         return Math.floor(Math.random() * max);
       }
+
+    //function to add flying monster
+    addFlying() {
+        let Lanes = [438,192,315];
+        this.flying = new Flying(this, game.config.width, Lanes[this.getRandomInt(3)], 'flyMonster');
+
+    }
 
     create() {
         //place tile sprite
@@ -88,6 +99,8 @@ class Play extends Phaser.Scene {
         this.knight.setPosition(15, 438);
 
         this.knight.scale = 0.5;
+        console.log('K width',this.knight.width);
+        console.log('K height',this.knight.height);
 
         this.knight.legs.anims.play('run');
 
@@ -134,6 +147,13 @@ class Play extends Phaser.Scene {
 
         //update beartrap
         this.beartrap1.update();
+        if(this.p1Score == 1000){
+            this.addFlying();
+            this.flying.update();
+        }if(this.p1Score > 1000) {
+            this.flying.update();
+        }
+        
         this.monster.x -= 1;
 
         //move platform to right to left
