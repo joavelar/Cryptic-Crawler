@@ -16,6 +16,8 @@ class Play extends Phaser.Scene {
         frameHieght: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('Spear', './asset/PlayerAssets/PlayerSpear.png', {frameWidth: 192,
+        frameHieght: 128, startFrame: 0, endFrame: 4});
         
         //ground enemy
         this.load.spritesheet('monster', './asset/EnemyAssets/EnemySheet.png', {frameWidth: 128,
