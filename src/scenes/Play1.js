@@ -157,6 +157,11 @@ class Play extends Phaser.Scene {
             this.flying.update();
         }
         
+        //play lane switch sound effect
+        if(Phaser.Input.Keyboard.JustDown(keyW) || Phaser.Input.Keyboard.JustDown(keyS)){
+            this.sound.play('switch')
+        }
+
         this.monster.x -= 1;
 
         //move platform to right to left
@@ -215,6 +220,8 @@ class Play extends Phaser.Scene {
         //create
         let snap = this.add.sprite(trap.x-27, trap.y, 'beartrap').setOrigin(0, 0);
         snap.anims.play('btrap');
+        //play hit sound effect
+        this.sound.play('dmg')
         snap.on('animationcomplete', () => {
             trap.reset();
             trap.alpha = 1;

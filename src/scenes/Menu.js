@@ -5,6 +5,14 @@ class Menu extends Phaser.Scene {
     preload(){
         //load menu image
         this.load.image('menu','./asset/UserInt/Menu.png')
+
+        //load all audio elements
+        this.load.audio('getHP','./asset/Audio/collect_health.wav')
+        this.load.audio('kill','./asset/Audio/destroy_enemy.wav')
+        this.load.audio('die','./asset/Audio/die.wav')
+        this.load.audio('atk','./asset/Audio/stab.wav')
+        this.load.audio('switch','./asset/Audio/switch_lanes.wav')
+        this.load.audio('dmg','./asset/Audio/take_damage.wav')
     }
     create() {
 
@@ -21,6 +29,7 @@ class Menu extends Phaser.Scene {
         //press w to start game
         if(Phaser.Input.Keyboard.JustDown(keyW)){
             this.scene.start("playScene");
+            this.sound.play('dmg')
         }
     }
 }
