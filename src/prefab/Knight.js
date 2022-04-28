@@ -10,6 +10,8 @@ class Knight extends Phaser.GameObjects.Container {
         this.add(this.legs);
         this.add(this.torso);
         this.add(this.spear);
+        
+        this.sfx = scene.sound.add('switch')
 
         
         // Spears used to debug the mouse pointer code
@@ -35,14 +37,21 @@ class Knight extends Phaser.GameObjects.Container {
             this.aimY = pointer.y-this.y;
         }, this);
     }
-    
+
+    preload() {
+        this.load.audio('switch','./asset/Audio/switch_lanes.wav')
+    }
+
     update() {
         if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
             this.y -= 123;
             console.log(this.y);
+            this.sfx.play()
+
         }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
             this.y += 123;
             console.log(this.y)
+            this.sfx.play()
         }
 
 

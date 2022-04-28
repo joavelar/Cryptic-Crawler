@@ -157,10 +157,7 @@ class Play extends Phaser.Scene {
             this.flying.update();
         }
         
-        //play lane switch sound effect
-        if(Phaser.Input.Keyboard.JustDown(keyW) || Phaser.Input.Keyboard.JustDown(keyS)){
-            this.sound.play('switch')
-        }
+
 
         this.monster.x -= 1;
 
