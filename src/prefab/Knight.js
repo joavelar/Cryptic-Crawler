@@ -38,10 +38,6 @@ class Knight extends Phaser.GameObjects.Container {
         }, this);
     }
 
-    preload() {
-        this.load.audio('switch','./asset/Audio/switch_lanes.wav')
-    }
-
     update() {
         if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
             this.y -= 123;
