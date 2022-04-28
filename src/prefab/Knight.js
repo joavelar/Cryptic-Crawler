@@ -10,6 +10,8 @@ class Knight extends Phaser.GameObjects.Container {
         this.add(this.legs);
         this.add(this.torso);
         this.add(this.spear);
+        this.width = 50;
+        this.height = this.legs.height;
         
         this.sfx = scene.sound.add('switch')
 

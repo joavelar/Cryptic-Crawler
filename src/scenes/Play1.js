@@ -142,9 +142,11 @@ class Play extends Phaser.Scene {
 
         this.healthLeft = this.add.text(350, borderPadding*2, this.knight.Lives, scoreConfig);
         
-    
+        this.debugRects = this.add.group();
+        
     }
     update() {
+        this.debugRects.clear(true,true);
         //move tile from right to left
         this.background.tilePositionX += 1.5;
 
@@ -200,11 +202,13 @@ class Play extends Phaser.Scene {
     }
 
     checkCollision(knight, obs) {
+        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, obs.x, obs.y, obs.width, obs.height, 0xFF0000, 0.2), true);
+        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, knight.x, knight.y, knight.width, knight.height, 0x00FF00, 0.2), true);
         // simple AABB checking
         if (knight.x < obs.x + obs.width &&
             knight.x + knight.width > obs.x &&
             knight.y < obs.y + obs.height &&
-            knight.height + knight.y > obs.y) {
+            knight.y + knight.height > obs.y) {
                 return true;
             }
         else {
