@@ -219,7 +219,7 @@ class Play extends Phaser.Scene {
     trapFunc(trap){
         trap.alpha = 0;
         //create
-        let snap = this.add.sprite(trap.x-27, trap.y, 'beartrap').setOrigin(0, 0);
+        let snap = this.add.sprite(trap.x-65, trap.y, 'beartrap').setOrigin(0, 0);
         snap.anims.play('btrap');
         //play hit sound effect
         this.sound.play('dmg')
