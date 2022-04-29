@@ -4,7 +4,8 @@ class Knight extends Phaser.GameObjects.Container {
         this.isSwinging = false;      //swinging weapon
         this.isJumping = false;     //Player jumped
         this.isFalling = false;     //Player fell
-        this.lane = 0; 
+        this.lane = 0;
+        this.maxLives = 2; 
         this.Lives = 2;               //set lives to 2
         this.legs = scene.add.sprite(-40, -100, 'Legs').setOrigin(0, 0);
         this.torso = scene.add.sprite(-55, -110, 'Arms').setOrigin(0, 0);
