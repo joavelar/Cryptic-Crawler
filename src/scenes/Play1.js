@@ -103,7 +103,7 @@ class Play extends Phaser.Scene {
             key: 'vault',
             frames: this.anims.generateFrameNumbers('Vault', {start: 1, end: 4, first:
                 0}),
-            frameRate: 10,
+            frameRate: 8,
         });
 
         //animation for knight falling
