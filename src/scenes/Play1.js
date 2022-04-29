@@ -19,6 +19,10 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('Spear', './asset/PlayerAssets/PlayerSpear.png', {frameWidth: 192,
         frameHieght: 128, startFrame: 0, endFrame: 4});
         
+        //knight actions
+        this.load.spritesheet('Vault','./asset/PlayerAssets/PlayerVaultNoEffects.png',{frameWidth: 192,frameHieght: 160, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('Fall','./asset/PlayerAssets/PlayerFall.png',{frameWidth: 192,frameHieght: 160, startFrame: 0, endFrame: 1});
+
         //ground enemy
         this.load.spritesheet('monster', './asset/EnemyAssets/EnemySheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
@@ -80,14 +84,21 @@ class Play extends Phaser.Scene {
             frameRate: 10,
         });
 
-
         //define attack state
         let attackState = false;
 
         //define attack sfx
         let atkSfx = this.sound.add('atk')
 
-        //animation for not attack
+        //animation for not attacking
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 0, first:
+                0}),
+            frameRate: 1,
+        });
+
+        //animation for vaulting
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 0, first:
