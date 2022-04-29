@@ -76,7 +76,7 @@ class Play extends Phaser.Scene {
         //upper level
         this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
 
-        //animation for attacking
+        //animation for knight attacking
         this.anims.create({
             key: 'attack',
             frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 4, first:
@@ -90,7 +90,7 @@ class Play extends Phaser.Scene {
         //define attack sfx
         let atkSfx = this.sound.add('atk')
 
-        //animation for not attacking
+        //animation for knight not attacking
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 0, first:
@@ -98,20 +98,20 @@ class Play extends Phaser.Scene {
             frameRate: 1,
         });
 
-        //animation for vaulting
+        //animation for knight vaulting
         this.anims.create({
             key: 'vault',
-            frames: this.anims.generateFrameNumbers('Vault', {start: 0, end: 0, first:
+            frames: this.anims.generateFrameNumbers('Vault', {start: 1, end: 4, first:
                 0}),
-            frameRate: 6,
+            frameRate: 10,
         });
 
-        //animation for falling
+        //animation for knight falling
         this.anims.create({
             key: 'fall',
-            frames: this.anims.generateFrameNumbers('Fall', {start: 0, end: 0, first:
-                0}),
-            frameRate: 1,
+            frames: this.anims.generateFrameNumbers('Fall', {start: 1, end: 1, first:
+                1}),
+            frameRate: 30,
         });
 
         //animation for flying monster
@@ -122,7 +122,7 @@ class Play extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         })
-        //animation for run 
+        //animation for knight run 
         this.anims.create({
             key: 'run',
             frames: this.anims.generateFrameNumbers('Legs', {start:0, end: 4, first:
@@ -241,9 +241,25 @@ class Play extends Phaser.Scene {
             this.attackState = false;   
         })
 
-        // if(this.knight.isJumping){
-        //     this.knight.spear.alpha
-        // }
+        if(this.knight.isJumping){
+            this.knight.spear.alpha = 0;
+            this.knight.legs.play('vault');
+         }
+        
+        this.knight.legs.on('animationcomplete', () => {
+            this.knight.spear.alpha = 1;
+            this.knight.legs.play('run')
+        })
+
+        if(this.knight.isFalling){
+            this.knight.spear.alpha = 0;
+            this.knight.legs.play('fall');
+         }
+        
+        this.knight.legs.on('animationcomplete', () => {
+            this.knight.spear.alpha = 1;
+            this.knight.legs.play('run')
+        })
 
         this.p1Score +=1;
         //console.log(this.p1Score)
