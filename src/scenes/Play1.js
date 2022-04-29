@@ -167,8 +167,6 @@ class Play extends Phaser.Scene {
         }if(this.p1Score > 5000) {
             this.flying.update();
         }
-        
-
 
         this.monster.x -= 1;
 
@@ -216,6 +214,16 @@ class Play extends Phaser.Scene {
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
+        }
+        if(this.p1Score > 5000){
+            this.flying.width = 64;
+            this.flying.height = 64;
+            if(this.checkCollision(this.knight, this.flying)){
+                console.log('hit flying monster');
+                this.knight.Lives -= 1;
+                this.healthLeft.text = this.knight.Lives
+                this.flying.reset();
+            }
         }
     }
 
