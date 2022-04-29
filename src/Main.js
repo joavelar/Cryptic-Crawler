@@ -10,5 +10,5 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height / 13;
 let borderPadding = borderUISize / 3;
 
-//reserver keyboard vars
+//reserve keyboard vars and mouse vars
 let keyW, keyS;

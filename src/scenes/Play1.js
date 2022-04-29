@@ -12,7 +12,7 @@ class Play extends Phaser.Scene {
         this.load.image('lowerPlatform', './asset/Enviroment/PlatformLanes Bottom.png')
 
         //knight image
-        this.load.spritesheet('Arms', './asset/PlayerAssets/PlayerArmsAndHead.png', {frameWidth: 192,
+        this.load.spritesheet('Arms', './asset/PlayerAssets/OLDPlayerArmsAndHead.png', {frameWidth: 192,
         frameHieght: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
         frameHieght: 128, startFrame: 0, endFrame: 4});
@@ -63,7 +63,6 @@ class Play extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
-
         this.add.text(20, 20, "cryptic crawler play scene1");
         this.add.rectangle(10, borderPadding, game.config.width - 20, borderUISize*1.8, 0x767676).setOrigin(0, 0);
         //lower level start level
@@ -72,6 +71,25 @@ class Play extends Phaser.Scene {
         this.midPlatform = this.add.tileSprite(0, 324, 0, 480, 'upperPlatform').setOrigin(0,0);
         //upper level
         this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
+
+        //animation for attacking
+        this.anims.create({
+            key: 'attack',
+            frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 4, first:
+                0}),
+            frameRate: 10,
+        });
+
+        //define attack state
+        let attackState = false;
+
+        //animation for not attack
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 0, first:
+                0}),
+            frameRate: 1,
+        });
 
         //animation for flying monster
         this.anims.create({
@@ -185,6 +203,19 @@ class Play extends Phaser.Scene {
         // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.knight.torso.y <= 437) {
         //     this.knight.torso.y += 123;
         // }
+
+        //click detection
+        
+        if(this.input.activePointer.isDown){
+            this.knight.spear.play('attack')
+            this.attackState = true
+            console.log('attack')
+        }
+        
+        this.knight.spear.on('animationcomplete', () => {
+            this.knight.spear.play('idle');
+            this.attackState = false;   
+        })
         this.p1Score +=1;
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;

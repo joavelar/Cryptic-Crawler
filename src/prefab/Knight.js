@@ -8,11 +8,11 @@ class Knight extends Phaser.GameObjects.Container {
         this.maxLives = 2; 
         this.Lives = 2;               //set lives to 2
         this.legs = scene.add.sprite(-40, -100, 'Legs').setOrigin(0, 0);
-        this.torso = scene.add.sprite(-55, -110, 'Arms').setOrigin(0, 0);
-        this.spear = scene.add.sprite(-70+96, -110+64, 'Spear').setOrigin(.5, .5);
+        //this.torso = scene.add.sprite(-55, -110, 'Arms').setOrigin(0, 0);
+        this.spear = scene.add.sprite(-70+95, -110+52, 'Arms').setOrigin(0.4, 0.4);
         //console.log(this.legs.anims);
         this.add(this.legs);
-        this.add(this.torso);
+        //this.add(this.torso);
         this.add(this.spear);
         this.width = 50;
         this.height = 50;
