@@ -198,6 +198,9 @@ class Play extends Phaser.Scene {
         }
         if(this.checkCollision(this.knight,this.monster)) {
             console.log('hit monster');
+            this.knight.Lives -= 1;
+            this.healthLeft.text = this.knight.Lives
+            this.monster.reset();
         }
     }
 
