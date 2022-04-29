@@ -100,8 +100,16 @@ class Play extends Phaser.Scene {
 
         //animation for vaulting
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('Arms', {start: 0, end: 0, first:
+            key: 'vault',
+            frames: this.anims.generateFrameNumbers('Vault', {start: 0, end: 0, first:
+                0}),
+            frameRate: 6,
+        });
+
+        //animation for falling
+        this.anims.create({
+            key: 'fall',
+            frames: this.anims.generateFrameNumbers('Fall', {start: 0, end: 0, first:
                 0}),
             frameRate: 1,
         });
@@ -232,6 +240,11 @@ class Play extends Phaser.Scene {
             this.knight.spear.play('idle');
             this.attackState = false;   
         })
+
+        // if(this.knight.isJumping){
+        //     this.knight.spear.alpha
+        // }
+
         this.p1Score +=1;
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
