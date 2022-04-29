@@ -80,6 +80,7 @@ class Play extends Phaser.Scene {
             frameRate: 10,
         });
 
+        
         //define attack state
         let attackState = false;
 
