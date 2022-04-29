@@ -80,9 +80,12 @@ class Play extends Phaser.Scene {
             frameRate: 10,
         });
 
-        
+
         //define attack state
         let attackState = false;
+
+        //define attack sfx
+        let atkSfx = this.sound.add('atk')
 
         //animation for not attack
         this.anims.create({
@@ -208,6 +211,7 @@ class Play extends Phaser.Scene {
         //click detection
         
         if(this.input.activePointer.isDown){
+            //this.atkSfx.play()             //trying to get attack sound effects to play 
             this.knight.spear.play('attack')
             this.attackState = true
             console.log('attack')
