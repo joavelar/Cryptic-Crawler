@@ -5,7 +5,7 @@ class Knight extends Phaser.GameObjects.Container {
         this.isJumping = false;     //Player jumped
         this.isFalling = false;     //Player fell
         this.lane = 0; 
-        this.Lives = 3;               //set lives to 3
+        this.Lives = 2;               //set lives to 2
         this.legs = scene.add.sprite(-40, -100, 'Legs').setOrigin(0, 0);
         this.torso = scene.add.sprite(-55, -110, 'Arms').setOrigin(0, 0);
         this.spear = scene.add.sprite(-70+96, -110+64, 'Spear').setOrigin(.5, .5);

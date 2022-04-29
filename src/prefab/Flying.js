@@ -23,6 +23,8 @@ class Flying extends Phaser.GameObjects.Sprite {
 
     //position reset
     reset() {
+        let Lanes = [438,192,315];
+        this.y = Lanes[this.getRandomInt(3)]-10;
         this.x = game.config.width;
     }
 }

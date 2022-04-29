@@ -3,7 +3,7 @@ class Beartrap extends Phaser.GameObjects.Sprite{
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.moveSpeed = 1.49;
-        this.width = 5
+        this.width = 40;
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random

@@ -43,6 +43,7 @@ class Play extends Phaser.Scene {
     addFlying() {
         let Lanes = [438,192,315];
         this.flying = new Flying(this, game.config.width, Lanes[this.getRandomInt(3)], 'flyMonster');
+        this.flying.anims.play('fly');
         console.log('fwidth:', this.flying.width);
 
     }
@@ -72,6 +73,14 @@ class Play extends Phaser.Scene {
         //upper level
         this.hiPlatform = this.add.tileSprite(0, 201, 0, 480, 'upperPlatform').setOrigin(0,0);
 
+        //animation for flying monster
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('flyMonster', {start: 0, end: 4, first:
+            0}),
+            frameRate: 5,
+            repeat: -1
+        })
         //animation for run 
         this.anims.create({
             key: 'run',
@@ -181,7 +190,7 @@ class Play extends Phaser.Scene {
         this.p1Score +=1;
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
-        if(this.p1Score == 1000){
+        if(this.p1Score == 15000){
             this.knight.Lives -= 1;
             this.healthLeft.text = Math.floor(this.knight.Lives);
         }
