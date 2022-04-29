@@ -2,6 +2,9 @@ class Knight extends Phaser.GameObjects.Container {
     constructor(scene, legs) {
         super(scene);        
         this.isSwinging = false;      //swinging weapon
+        this.isJumping = false;     //Player jumped
+        this.isFalling = false;     //Player fell
+        this.lane = 0; 
         this.Lives = 3;               //set lives to 3
         this.legs = scene.add.sprite(-40, -100, 'Legs').setOrigin(0, 0);
         this.torso = scene.add.sprite(-55, -110, 'Arms').setOrigin(0, 0);
@@ -11,7 +14,7 @@ class Knight extends Phaser.GameObjects.Container {
         this.add(this.torso);
         this.add(this.spear);
         this.width = 50;
-        this.height = this.legs.height;
+        this.height = 50;
         
         this.sfx = scene.sound.add('switch')
 
@@ -41,16 +44,46 @@ class Knight extends Phaser.GameObjects.Container {
     }
 
     update() {
-        if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
-            this.y -= 123;
-            console.log(this.y);
-            this.sfx.play()
-
-        }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
-            this.y += 123;
-            console.log(this.y)
-            this.sfx.play()
+        if(!this.isJumping && !this.isFalling){
+            if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
+                this.isJumping = true;
+                this.lane = this.y - 123;
+                console.log(this.y);
+                this.sfx.play()
+    
+            }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
+                this.isFalling = true
+                this.lane = this.y + 123;
+                console.log(this.y)
+                this.sfx.play()
+            }
         }
+        if(this.isJumping){
+            if (this.y <= this.lane){
+                this.isJumping = false;
+            }else if(this.isJumping){
+                this.y -= 4.1
+            }
+        }
+        if(this.isFalling){
+            if (this.y >= this.lane){
+                this.isFalling = false;
+            }else if(this.isFalling){
+                this.y += 4.1
+            }  
+        }
+
+
+        // if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
+        //     this.y -= 20;
+        //     console.log(this.y);
+        //     this.sfx.play()
+
+        // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
+        //     this.y += 20;
+        //     console.log(this.y)
+        //     this.sfx.play()
+        // }
 
 
         //Spear turning (math from http://phaser.io/examples/v3/view/actions/rotate-container-facing-point)
