@@ -265,7 +265,7 @@ class Play extends Phaser.Scene {
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 15000){
-            if(this.knight.Lives == 2){
+            if(this.knight.Lives == 3){
                 this.knight.maxLives -= 1;
                 this.knight.Lives -= 1;
                 this.healthLeft.text = Math.floor(this.knight.Lives);
