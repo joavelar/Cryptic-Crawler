@@ -1,7 +1,8 @@
 //Title: Crypt Crawler
 //Authors: Tomas Hickman, Jose Velarde-Ruiz, Jonathan Hung
 //Date Completed: 5/2/2022
-//Creative Tilt: Dark Fantasy inspired endless runner where you fight monsters until you die.
+//Creative Tilt: Dark Fantasy inspired endless runner where players can aim and attack monsters
+//, or change lanes to evade the monsters until they die. 
 
 let config = {
     type: Phaser.CANVAS,
