@@ -53,6 +53,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //game over flag
+        this.gameOver = false;
         //place tile sprite
         this.background = this.add.tileSprite(0, 0, 720, 480, 'background').setOrigin(0, 0);
         
@@ -197,30 +199,37 @@ class Play extends Phaser.Scene {
     }
     update() {
         this.debugRects.clear(true,true);
-        //move tile from right to left
-        this.background.tilePositionX += 1.5;
+        if(!this.gameOver){
+            //move tile from right to left
+            this.background.tilePositionX += 1.5;
 
-        //update beartrap
-        this.beartrap1.update();
-        if(this.p1Score == 5000){
-            this.addFlying();
-            this.flying.update();
-        }if(this.p1Score > 5000) {
-            this.flying.update();
+            this.monster.x -= 1;
+
+            //update beartrap
+            this.beartrap1.update();
+            if(this.p1Score == 5000){
+                this.addFlying();
+                this.flying.update();
+            }if(this.p1Score > 5000) {
+                this.flying.update();
+            } 
+            this.monster.update();
+            this.knight.update()
+        
+
+       
+            //move platform to right to left
+            this.lowPlatform.tilePositionX += 1.5;
+            this.midPlatform.tilePositionX += 1.5;
+            this.hiPlatform.tilePositionX += 1.5;
+            
+            this.p1Score +=1;
         }
-
-        this.monster.x -= 1;
-
-        //move platform to right to left
-        this.lowPlatform.tilePositionX += 1.5;
-        this.midPlatform.tilePositionX += 1.5;
-        this.hiPlatform.tilePositionX += 1.5;
-        this.monster.update();
-
+        
         //this.knight.angle += 1;
         //this.knight.torso.angle += 1; //moves the upper torso
         //this.knight.y -= 1;
-        this.knight.update()
+        
         // if(Phaser.Input.Keyboard.JustDown(keyW) && this.knight.torso.y >= 193) {//&& this.y == 438
         //     this.knight.torso.y -= 123;
         // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.knight.torso.y <= 437) {
@@ -261,7 +270,7 @@ class Play extends Phaser.Scene {
             this.knight.legs.play('run')
         })
 
-        this.p1Score +=1;
+        
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
         if(this.p1Score == 15000){
@@ -284,12 +293,18 @@ class Play extends Phaser.Scene {
             //this.shipExplode(this.ship03);
             this.trapFunc(this.beartrap1)
             console.log('hit beartarap');
+            if(this.knight.Lives == 0){
+                this.gameOver = true;
+            }
         }
         if(this.checkCollision(this.knight,this.monster)) {
             console.log('hit monster');
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
+            if(this.knight.Lives == 0){
+                this.gameOver = true;
+            }
         }
         if(this.p1Score > 5000){
             this.flying.width = 64;
@@ -299,6 +314,9 @@ class Play extends Phaser.Scene {
                 this.knight.Lives -= 1;
                 this.healthLeft.text = this.knight.Lives
                 this.flying.reset();
+                if(this.knight.Lives == 0){
+                    this.gameOver = true;
+                }
             }
         }
     }
@@ -334,5 +352,8 @@ class Play extends Phaser.Scene {
 
         this.knight.Lives -= 1;
         this.healthLeft.text = Math.floor(this.knight.Lives);
+        if(this.knight.Lives == 0){
+            this.gameOver = true;
+        }
     }
 }
