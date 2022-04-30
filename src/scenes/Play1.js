@@ -68,6 +68,8 @@ class Play extends Phaser.Scene {
         //define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.add.text(20, 20, "cryptic crawler play scene1");
         this.add.rectangle(10, borderPadding, game.config.width - 20, borderUISize*1.8, 0x767676).setOrigin(0, 0);
@@ -198,6 +200,17 @@ class Play extends Phaser.Scene {
         
     }
     update() {
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        }
         this.debugRects.clear(true,true);
         if(!this.gameOver){
             //move tile from right to left
@@ -224,6 +237,18 @@ class Play extends Phaser.Scene {
             this.hiPlatform.tilePositionX += 1.5;
             
             this.p1Score +=1;
+        }
+        if(this.gameOver){
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or (M) to Menu If', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 128, 'Playing Again Without Refresh Hold Down', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 192, 'Left Mouse Button', scoreConfig).setOrigin(0.5);
+            if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
+                this.scene.restart();
+            }
+            if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyM)){
+                this.scene.start("menuScene");
+            }
         }
         
         //this.knight.angle += 1;
