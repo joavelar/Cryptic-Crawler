@@ -13,30 +13,38 @@ class Play extends Phaser.Scene {
 
         //knight image
         this.load.spritesheet('Arms', './asset/PlayerAssets/OLDPlayerArmsAndHead.png', {frameWidth: 192,
-        frameHieght: 128, startFrame: 0, endFrame: 4});
+        frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('Legs', './asset/PlayerAssets/PlayerTorsoSheet.png', {frameWidth: 128,
-        frameHieght: 128, startFrame: 0, endFrame: 4});
+        frameHeight: 128, startFrame: 0, endFrame: 4});
         this.load.spritesheet('Spear', './asset/PlayerAssets/PlayerSpear.png', {frameWidth: 192,
-        frameHieght: 128, startFrame: 0, endFrame: 4});
+        frameHeight: 128, startFrame: 0, endFrame: 4});
         
         //knight actions
-        this.load.spritesheet('Vault','./asset/PlayerAssets/PlayerVaultNoEffects.png',{frameWidth: 192,frameHieght: 160, startFrame: 0, endFrame: 4});
-        this.load.spritesheet('Fall','./asset/PlayerAssets/PlayerFall.png',{frameWidth: 192,frameHieght: 160, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('Vault','./asset/PlayerAssets/PlayerVaultNoEffects.png',{frameWidth: 192,frameHeight: 160, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('Fall','./asset/PlayerAssets/PlayerFall.png',{frameWidth: 192,frameHeight: 160, startFrame: 0, endFrame: 1});
 
         //ground enemy
         this.load.spritesheet('monster', './asset/EnemyAssets/EnemySheet.png', {frameWidth: 128,
-        frameHieght: 128, startFrame: 0, endFrame: 4});
+        frameHeight: 128, startFrame: 0, endFrame: 4});
 
         //beartrap spritesheet
         this.load.spritesheet('trap', './asset/EnemyAssets/BeartrapSheet.png', {frameWidth: 64,
-        frameHieght: 32, startFrame: 0, endFrame: 4});
+        frameHeight: 32, startFrame: 0, endFrame: 4});
 
         //load beartrap
         this.load.image('beartrap', './asset/EnemyAssets/Beartrap.png');
 
         //load flying enemy 
         this.load.spritesheet('flyMonster', './asset/EnemyAssets/FlyingEnemySheet.png',{frameWidth: 128,
-        frameHieght: 128, startFrame: 0, endFrame:4});
+        frameHeight: 128, startFrame: 0, endFrame:4});
+
+        //load life points
+        this.load.spritesheet('lifePoint', './asset/UserInt/LifePointSheet.png',{frameWidth: 64,
+            frameHeight: 64, startFrame: 0, endFrame:9});
+
+        //load life pickup
+        this.load.spritesheet('pickUp', './asset/UserInt/LifePickup.png',{frameWidth: 64,
+            frameHeight: 64, startFrame: 0, endFrame:4});
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -93,6 +101,37 @@ class Play extends Phaser.Scene {
 
         //define attack sfx
         let atkSfx = this.sound.add('atk')
+
+        //animation for the lifepoints
+        this.anims.create({
+            key: 'lifePoint',
+            frames: this.anims.generateFrameNumbers('lifePoint', {start: 0, end: 4, first:
+                0}),
+            frameRate: 15,
+        });
+
+        //animation for when lifepoints are depleted
+        this.anims.create({
+            key: 'deathPoint',
+            frames: this.anims.generateFrameNumbers('lifePoint', {start: 4, end: 8, first:
+                6}),
+            frameRate: 8,
+        });
+
+        this.anims.create({
+            key: 'deathPoint2',
+            frames: this.anims.generateFrameNumbers('lifePoint', {start: 8, end: 8, first:
+                8}),
+            frameRate: 1,
+        });
+
+        //animation for the life pick ups
+        this.anims.create({
+            key: 'pickUpPoint',
+            frames: this.anims.generateFrameNumbers('pickUp', {start: 0, end: 4, first:
+                0}),
+            frameRate: 8,
+        });
 
         //animation for knight not attacking
         this.anims.create({
@@ -198,6 +237,20 @@ class Play extends Phaser.Scene {
         
         this.debugRects = this.add.group();
         
+        //create lifepoints
+        this.lifePoint1 = this.add.sprite(20, 10, 'lifePoint').setOrigin(0, 0);
+        this.lifePoint2 = this.add.sprite(70, 10, 'lifePoint').setOrigin(0, 0);
+        this.lifePoint3 = this.add.sprite(120, 10, 'lifePoint').setOrigin(0, 0);
+
+        this.lifePoint1.play('lifePoint');
+        this.lifePoint2.play('lifePoint');
+        this.lifePoint3.play('lifePoint');
+
+        this.lifePoint1Played = false;
+        this.lifePoint2Played = false;
+        this.lifePoint3Played = false;
+        //create pickUps 
+
     }
     update() {
         let scoreConfig = {
@@ -238,6 +291,47 @@ class Play extends Phaser.Scene {
             
             this.p1Score +=1;
         }
+
+        //lifepoint checking
+        if (this.lifePoint1Played == false){
+            this.lifePoint1.on('animationcomplete', () => {
+                if(this.knight.Lives >= 1){
+                    this.lifePoint1.play('lifePoint');
+                }else{
+                    this.lifePoint1.play('deathPoint');
+                    this.lifePoint1Played = true;
+                }            
+            });
+        }else{
+            this.lifePoint1.play('deathPoint2')
+        };
+        if (this.lifePoint2Played == false){
+            this.lifePoint2.on('animationcomplete', () => {
+                if(this.knight.Lives >= 2){
+                    this.lifePoint2.play('lifePoint');
+                }else{
+                    this.lifePoint2.play('deathPoint');
+                    this.lifePoint2Played = true;
+                }            
+            });
+        }else{
+            this.lifePoint2.play('deathPoint2')
+        };
+
+        if (this.lifePoint3Played == false){
+            this.lifePoint3.on('animationcomplete', () => {
+                if(this.knight.Lives == 3){
+                    this.lifePoint3.play('lifePoint');
+                }else{
+                    this.lifePoint3.play('deathPoint');
+                    this.lifePoint3Played = true;
+                }            
+            });
+        }else{
+            this.lifePoint3.play('deathPoint2')
+        };
+
+        //Game Over state
         if(this.gameOver){
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or (M) to Menu If', scoreConfig).setOrigin(0.5);
