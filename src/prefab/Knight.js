@@ -1,7 +1,7 @@
 class Knight extends Phaser.GameObjects.Container {
     constructor(scene, legs) {
         super(scene);        
-        this.isSwinging = false;      //swinging weapon
+        this.isSwinging = false;    //swinging weapon
         this.isJumping = false;     //Player jumped
         this.isFalling = false;     //Player fell
         this.lane = 0;
@@ -38,6 +38,10 @@ class Knight extends Phaser.GameObjects.Container {
         // this.add(this.spear4);
 
         //from https://phaser.discourse.group/t/how-to-move-sprite-and-his-body/6055
+
+        this.colorArray = [0x6666ff, 0x9966ff, 0xff6699, 0xff33cc, 0xff66ff]
+        this.arraySpot = 0;
+
         scene.input.on('pointermove', function (pointer) {
             this.aimX = pointer.x-this.x;
             this.aimY = pointer.y-this.y;

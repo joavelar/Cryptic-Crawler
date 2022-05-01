@@ -425,6 +425,23 @@ class Play extends Phaser.Scene {
                 this.gameOver = true;
             }
         }
+
+        //check collision with spear and enemy
+        this.spearX = Math.cos(this.knight.angleDeg/60+5.99)*50  + this.knight.x+20;
+        this.spearY = Math.sin(this.knight.angleDeg/60+5.99)*50  + this.knight.y-20;
+        if(this.checkSpearCollision(this.spearX,this.spearY,this.monster) && this.attackState) {
+            console.log('stabbed monster');
+            this.monster.reset();
+        }
+
+        if(keyR.isDown){
+            console.log(this.spearX-this.monster.x);
+        }
+
+
+
+
+
         if(this.p1Score > 5000){
             this.flying.width = 64;
             this.flying.height = 64;
@@ -448,6 +465,23 @@ class Play extends Phaser.Scene {
             knight.x + knight.width > obs.x &&
             knight.y < obs.y + obs.height &&
             knight.y + knight.height > obs.y) {
+                return true;
+            }
+        else {
+            return false;
+        }
+    }
+
+    checkSpearCollision(x, y, obs) {
+        this.xBuffer = 10;
+        this.yBuffer = 40;
+        this.debugRects.add(new Phaser.GameObjects.Ellipse(this, x, y, 10, 10, 0x00FF00, 1), true);
+        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, x, y, this.xBuffer, this.yBuffer, 0x00FF00, 0.2), true);
+        // simple AABB checking
+        if (x < obs.x + obs.width &&
+            x+this.xBuffer > obs.x &&
+            y < obs.y + obs.height &&
+            y+this.yBuffer > obs.y) {
                 return true;
             }
         else {
