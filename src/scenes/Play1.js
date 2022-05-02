@@ -4,6 +4,15 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
+        //load audio again (since I can't load it from Menu)
+        this.load.audio('getHP','./asset/Audio/collect_health.wav')
+        this.load.audio('kill','./asset/Audio/destroy_enemy.wav')
+        this.load.audio('die','./asset/Audio/die.wav')
+        this.load.audio('atk','./asset/Audio/stab.wav')
+        this.load.audio('switch','./asset/Audio/switch_lanes.wav')
+        this.load.audio('dmg','./asset/Audio/take_damage.wav')
+        this.load.audio('bgm','./asset/Audio/possible_bgm_2.wav')
+
         //load background image
         this.load.image('background', './asset/Enviroment/Background.png');
 
@@ -99,8 +108,12 @@ class Play extends Phaser.Scene {
         //define attack state
         let attackState = false;
 
-        //define attack sfx
-        let atkSfx = this.sound.add('atk')
+        //define all sfx
+        let atkSfx = this.sound.add('atk');
+        let pickupSfx = this.sound.add('getHP');
+        let killSfx = this.sound.add('kill');
+        let dieSfx = this.sound.add('die');
+        let bgm = this.sound.add('bgm');
 
         //animation for the lifepoints
         this.anims.create({
@@ -207,7 +220,6 @@ class Play extends Phaser.Scene {
         //add beartrap
         this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)]-10, 'beartrap', 0).setOrigin(0, 0);
         //make the monster
-        //For some reason Monster is not defined?
         this.monster = new Monster(this, 300, 100);
         this.monster.scale = 0.65;
         this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
@@ -358,7 +370,6 @@ class Play extends Phaser.Scene {
         //click detection
         
         if(this.input.activePointer.isDown){
-            //this.atkSfx.play()             //trying to get attack sound effects to play 
             this.knight.spear.play('attack')
             this.attackState = true
             console.log('attack')
