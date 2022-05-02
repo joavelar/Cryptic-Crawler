@@ -273,8 +273,7 @@ class Play extends Phaser.Scene {
         if (this.isAttacking == false){
             this.input.on('pointerdown', ()=> {
                 this.knight.spear.play('attack')
-                this.sound.play('atk')    
-            })   
+            });   
         }
 
 
@@ -483,6 +482,8 @@ class Play extends Phaser.Scene {
             this.sound.play('dmg')
             if(this.knight.Lives == 0){
                 this.sound.add('die').play();
+                this.backgroundMusic.loop = false;
+                this.backgroundMusic.stop();
                 this.gameOver = true;
             }
         }
