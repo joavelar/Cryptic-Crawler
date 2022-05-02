@@ -4,15 +4,6 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        //load audio again (since I can't load it from Menu)
-        this.load.audio('getHP','./asset/Audio/collect_health.wav')
-        this.load.audio('kill','./asset/Audio/destroy_enemy.wav')
-        this.load.audio('die','./asset/Audio/die.wav')
-        this.load.audio('atk','./asset/Audio/stab.wav')
-        this.load.audio('switch','./asset/Audio/switch_lanes.wav')
-        this.load.audio('dmg','./asset/Audio/take_damage.wav')
-        this.load.audio('bgm','./asset/Audio/possible_bgm_2.wav')
-
         //load background image
         this.load.image('background', './asset/Enviroment/Background.png');
 
@@ -54,6 +45,7 @@ class Play extends Phaser.Scene {
         //load life pickup
         this.load.spritesheet('pickUp', './asset/UserInt/LifePickup.png',{frameWidth: 64,
             frameHeight: 64, startFrame: 0, endFrame:4});
+        
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -70,6 +62,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //configuration code for audio
+        let musicConfig = {
+            volume: 0.5,
+        }
+
         //game over flag
         this.gameOver = false;
         //place tile sprite
@@ -104,16 +101,6 @@ class Play extends Phaser.Scene {
                 0}),
             frameRate: 10,
         });
-
-        //define attack state
-        let attackState = false;
-
-        //define all sfx
-        let atkSfx = this.sound.add('atk');
-        let pickupSfx = this.sound.add('getHP');
-        let killSfx = this.sound.add('kill');
-        let dieSfx = this.sound.add('die');
-        let bgm = this.sound.add('bgm');
 
         //animation for the lifepoints
         this.anims.create({
@@ -263,8 +250,25 @@ class Play extends Phaser.Scene {
         this.lifePoint3Played = false;
         //create pickUps 
 
+        //create 
+        this.isAttacking = false;
+        if (this.isAttacking == false){
+            this.input.on('pointerdown', ()=> {
+                this.knight.spear.play('attack')
+                this.sound.play('atk')    
+            })   
+        }
+
+
     }
     update() {
+
+        //checking if attack is done or not.
+        if(this.knight.spear.isPlaying){
+            this.isAttacking = true;
+        } else {
+            this.isAttacking = false;
+        }
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -324,6 +328,7 @@ class Play extends Phaser.Scene {
                 }else{
                     this.lifePoint2.play('deathPoint');
                     this.lifePoint2Played = true;
+                    ;
                 }            
             });
         }else{
@@ -337,6 +342,7 @@ class Play extends Phaser.Scene {
                 }else{
                     this.lifePoint3.play('deathPoint');
                     this.lifePoint3Played = true;
+                    ;
                 }            
             });
         }else{
@@ -367,14 +373,7 @@ class Play extends Phaser.Scene {
         //     this.knight.torso.y += 123;
         // }
 
-        //click detection
-        
-        if(this.input.activePointer.isDown){
-            this.knight.spear.play('attack')
-            this.attackState = true
-            console.log('attack')
-        }
-        
+
         this.knight.spear.on('animationcomplete', () => {
             this.knight.spear.play('idle');
             this.attackState = false;   
@@ -432,6 +431,7 @@ class Play extends Phaser.Scene {
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
+            this.sound.play('dmg')
             if(this.knight.Lives == 0){
                 this.gameOver = true;
             }
