@@ -3,6 +3,7 @@
 //Date Completed: 5/2/2022
 //Creative Tilt: Dark Fantasy inspired endless runner where players can aim and attack monsters
 //, or change lanes to evade the monsters until they die. 
+// very proud of getting mouse aim to work, and making the song sound nice
 
 let config = {
     type: Phaser.CANVAS,
