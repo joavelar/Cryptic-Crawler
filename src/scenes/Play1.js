@@ -548,8 +548,8 @@ class Play extends Phaser.Scene {
     }
 
     checkCollision(knight, obs) {
-        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, obs.x, obs.y, obs.width, obs.height, 0xFF0000, 0.2), true);
-        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, knight.x, knight.y, knight.width, knight.height, 0x00FF00, 0.2), true);
+        //this.debugRects.add(new Phaser.GameObjects.Rectangle(this, obs.x, obs.y, obs.width, obs.height, 0xFF0000, 0.2), true);
+        //this.debugRects.add(new Phaser.GameObjects.Rectangle(this, knight.x, knight.y, knight.width, knight.height, 0x00FF00, 0.2), true);
         // simple AABB checking
         if (knight.x < obs.x + obs.width &&
             knight.x + knight.width > obs.x &&
@@ -565,8 +565,8 @@ class Play extends Phaser.Scene {
     checkSpearCollision(x, y, obs) {
         this.xBuffer = 10;
         this.yBuffer = 40;
-        this.debugRects.add(new Phaser.GameObjects.Ellipse(this, x, y, 10, 10, 0x00FF00, 1), true);
-        this.debugRects.add(new Phaser.GameObjects.Rectangle(this, x, y, this.xBuffer, this.yBuffer, 0x00FF00, 0.2), true);
+        //this.debugRects.add(new Phaser.GameObjects.Ellipse(this, x, y, 10, 10, 0x00FF00, 1), true);
+        //this.debugRects.add(new Phaser.GameObjects.Rectangle(this, x, y, this.xBuffer, this.yBuffer, 0x00FF00, 0.2), true);
         // simple AABB checking
         if (x < obs.x + obs.width &&
             x+this.xBuffer > obs.x &&
