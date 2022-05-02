@@ -6,13 +6,14 @@ class Menu extends Phaser.Scene {
         //load menu image
         this.load.image('menu','./asset/UserInt/Menu.png')
 
-        //load all audio elements
+        //load all the audio elements
         this.load.audio('getHP','./asset/Audio/collect_health.wav')
         this.load.audio('kill','./asset/Audio/destroy_enemy.wav')
         this.load.audio('die','./asset/Audio/die.wav')
         this.load.audio('atk','./asset/Audio/stab.wav')
         this.load.audio('switch','./asset/Audio/switch_lanes.wav')
         this.load.audio('dmg','./asset/Audio/take_damage.wav')
+        this.load.audio('bgm','./asset/Audio/possible_bgm_2.wav')
     }
     create() {
 
