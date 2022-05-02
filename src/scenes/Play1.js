@@ -218,15 +218,19 @@ class Play extends Phaser.Scene {
 
         //add beartrap
         this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)]-10, 'beartrap', 0).setOrigin(0, 0);
-        //this.beartrap2 = new Beartrap(this, game.config.width, 1000, 'beartrap', 0).setOrigin(0, 0);
+        this.beartrap2 = "unspawned";
+
         //make the monster
         this.monster = new Monster(this, 300, 100);
         this.monster.scale = 0.65;
-        this.monster.setPosition(724,Lanes[this.getRandomInt(3)]);
+        this.monster.setPosition(1024,Lanes[this.getRandomInt(3)]);
         this.monster.body.play('crawl')
         this.add.existing(this.monster);
         console.log('width',this.monster.width);
         console.log('height',this.monster.height);
+
+        //make flier
+        this.flyingCheck = "unspawned";
 
         // initialize score
         this.p1Score = 0;
@@ -245,7 +249,7 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(550, borderPadding*2, this.p1Score, scoreConfig);
 
-        this.healthLeft = this.add.text(350, borderPadding*2, this.knight.Lives, scoreConfig);
+        this.healthLeft = this.add.text(4000, borderPadding*2, this.knight.Lives, scoreConfig);
         
         this.debugRects = this.add.group();
         
@@ -306,17 +310,19 @@ class Play extends Phaser.Scene {
 
             //update beartrap
             this.beartrap1.update();
-            if(this.p1Score == 250){
-                this.beartrap2 = new Beartrap(this, game.config.width, [[428,182,305]][this.getRandomInt(3)], 'beartrap', 0).setOrigin(0, 0);
-                console.log('beartrap 2')
-            }
             if(this.p1Score > 250){
+                if (this.beartrap2 == "unspawned") {
+                    this.beartrap2 = new Beartrap(this, game.config.width, [[428,182,305]][this.getRandomInt(3)], 'beartrap', 0).setOrigin(0, 0);
+                    this.beartrap2.reset();
+                }
                 this.beartrap2.update();
             }
-            if(this.p1Score == 5000){
-                this.addFlying();
-                this.flying.update();
-            }if(this.p1Score > 5000) {
+
+            if(this.p1Score > 5000) {
+                if(this.flyingCheck == "unspawned"){
+                    this.flyingCheck = "spawned";
+                    this.addFlying();
+                }
                 this.flying.update();
             } 
             this.monster.update();
@@ -376,9 +382,9 @@ class Play extends Phaser.Scene {
         //Game Over state
         if(this.gameOver){
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or (M) to Menu If', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 128, 'Playing Again Without Refresh Hold Down', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 192, 'Left Mouse Button', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or (M) to Menu', scoreConfig).setOrigin(0.5);
+            //this.add.text(game.config.width/2, game.config.height/2 + 128, 'Playing Again Without Refresh Hold Down', scoreConfig).setOrigin(0.5);
+            //this.add.text(game.config.width/2, game.config.height/2 + 192, 'Left Mouse Button', scoreConfig).setOrigin(0.5);
             if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
                 this.scene.restart();
             }
@@ -435,7 +441,7 @@ class Play extends Phaser.Scene {
         
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
-        if(this.p1Score == 15000){
+        if(this.p1Score > 15000 && this.knight.maxLives == 3){
             if(this.knight.Lives == 3){
                 this.knight.maxLives -= 1;
                 this.knight.Lives -= 1;
@@ -509,6 +515,15 @@ class Play extends Phaser.Scene {
 
 
         if(this.p1Score > 5000){
+            console.log("a");
+            if(this.flyingCheck == "unspawned"){
+                console.log("b");
+                this.flyingCheck = "spawned";
+                this.addFlying();
+                console.log("c");
+                this.flying.update();
+            }
+            console.log("d");
             this.flying.width = 64;
             this.flying.height = 64;
             if(this.checkCollision(this.knight, this.flying)){

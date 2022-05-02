@@ -5,6 +5,8 @@ class Flying extends Phaser.GameObjects.Sprite {
         this.moveSpeed = 6;
         this.scale = 0.5;
         this.baseY = y;
+        this.width = 0;
+        this.height = 0;
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
