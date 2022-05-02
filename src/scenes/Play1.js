@@ -313,10 +313,10 @@ class Play extends Phaser.Scene {
             if(this.p1Score > 250){
                 this.beartrap2.update();
             }
-            if(this.p1Score == 5000){
+            if(this.p1Score == 10){
                 this.addFlying();
                 this.flying.update();
-            }if(this.p1Score > 5000) {
+            }if(this.p1Score > 10) {
                 this.flying.update();
             } 
             this.monster.update();
@@ -456,6 +456,8 @@ class Play extends Phaser.Scene {
             this.trapFunc(this.beartrap1)
             console.log('hit beartarap');
             if(this.knight.Lives == 0){
+                this.sound.add('die').play();
+                this.backgroundMusic.stop();
                 this.gameOver = true;
             }
         }
@@ -469,6 +471,8 @@ class Play extends Phaser.Scene {
                 this.trapFunc(this.beartrap2)
                 console.log('hit beartarap');
                 if(this.knight.Lives == 0){
+                    this.sound.add('die').play();
+                    this.backgroundMusic.stop();
                     this.gameOver = true;
                 }
             }
@@ -479,10 +483,8 @@ class Play extends Phaser.Scene {
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
-            this.sound.play('dmg')
             if(this.knight.Lives == 0){
                 this.sound.add('die').play();
-                this.backgroundMusic.loop = false;
                 this.backgroundMusic.stop();
                 this.gameOver = true;
             }
@@ -505,17 +507,25 @@ class Play extends Phaser.Scene {
 
 
 
-        if(this.p1Score > 5000){
+        if(this.p1Score > 10){
             this.flying.width = 64;
             this.flying.height = 64;
             if(this.checkCollision(this.knight, this.flying)){
+                this.sound.add('dmg').play();
                 console.log('hit flying monster');
                 this.knight.Lives -= 1;
                 this.healthLeft.text = this.knight.Lives
                 this.flying.reset();
                 if(this.knight.Lives == 0){
+                    this.sound.add('die').play();
+                    this.backgroundMusic.stop();
                     this.gameOver = true;
                 }
+            }
+            if(this.checkSpearCollision(this.spearX,this.spearY,this.flying) && this.attackState) {
+                console.log('stabbed flying');
+                this.flying.reset();
+                this.sound.add('kill').play();
             }
         }
     }
