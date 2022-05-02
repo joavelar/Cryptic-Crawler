@@ -495,6 +495,7 @@ class Play extends Phaser.Scene {
         this.spearY = Math.sin(this.knight.angleDeg/60+5.99)*50  + this.knight.y-20;
         if(this.checkSpearCollision(this.spearX,this.spearY,this.monster) && this.attackState) {
             console.log('stabbed monster');
+            this.p1Score = this.p1Score + 500
             this.monster.reset();
             this.sound.add('kill').play();
         }
@@ -524,6 +525,7 @@ class Play extends Phaser.Scene {
             }
             if(this.checkSpearCollision(this.spearX,this.spearY,this.flying) && this.attackState) {
                 console.log('stabbed flying');
+                this.p1Score = this.p1Score + 1000
                 this.flying.reset();
                 this.sound.add('kill').play();
             }
