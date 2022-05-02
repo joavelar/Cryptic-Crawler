@@ -53,7 +53,7 @@ class Play extends Phaser.Scene {
 
     //function to add flying monster
     addFlying() {
-        let Lanes = [438,192,315];
+        let Lanes = [383,147,270];
         this.flying = new Flying(this, game.config.width, Lanes[this.getRandomInt(3)], 'flyMonster');
         this.flying.anims.play('fly');
         console.log('fwidth:', this.flying.width);
