@@ -25,7 +25,7 @@ class Menu extends Phaser.Scene {
 
 
         //placeholder skip past menu into playscene
-        this.scene.start("playScene");
+        //this.scene.start("playScene");
     }
     update(){
         //press w to start game

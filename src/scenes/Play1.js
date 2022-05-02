@@ -313,10 +313,10 @@ class Play extends Phaser.Scene {
             if(this.p1Score > 250){
                 this.beartrap2.update();
             }
-            if(this.p1Score == 10){
+            if(this.p1Score == 5000){
                 this.addFlying();
                 this.flying.update();
-            }if(this.p1Score > 10) {
+            }if(this.p1Score > 5000) {
                 this.flying.update();
             } 
             this.monster.update();
@@ -507,7 +507,7 @@ class Play extends Phaser.Scene {
 
 
 
-        if(this.p1Score > 10){
+        if(this.p1Score > 5000){
             this.flying.width = 64;
             this.flying.height = 64;
             if(this.checkCollision(this.knight, this.flying)){
