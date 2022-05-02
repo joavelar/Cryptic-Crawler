@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
         this.load.audio('atk','./asset/Audio/stab.wav')
         this.load.audio('switch','./asset/Audio/switch_lanes.wav')
         this.load.audio('dmg','./asset/Audio/take_damage.wav')
-        this.load.audio('bgm','./asset/Audio/possible_bgm_2.wav')
+        this.load.audio('bgm','./asset/Audio/possible_bgm.wav')
 
         //load background image
         this.load.image('background', './asset/Enviroment/Background.png');
@@ -106,14 +106,7 @@ class Play extends Phaser.Scene {
         });
 
         //define attack state
-        let attackState = false;
-
-        //define all sfx
-        let atkSfx = this.sound.add('atk');
-        let pickupSfx = this.sound.add('getHP');
-        let killSfx = this.sound.add('kill');
-        let dieSfx = this.sound.add('die');
-        let bgm = this.sound.add('bgm');
+        this.attackState = false;
 
         //animation for the lifepoints
         this.anims.create({
@@ -219,6 +212,7 @@ class Play extends Phaser.Scene {
 
         //add beartrap
         this.beartrap1 = new Beartrap(this, game.config.width, Lanes[this.getRandomInt(3)]-10, 'beartrap', 0).setOrigin(0, 0);
+        //this.beartrap2 = new Beartrap(this, game.config.width, 1000, 'beartrap', 0).setOrigin(0, 0);
         //make the monster
         this.monster = new Monster(this, 300, 100);
         this.monster.scale = 0.65;
@@ -263,6 +257,13 @@ class Play extends Phaser.Scene {
         this.lifePoint3Played = false;
         //create pickUps 
 
+
+        //start music
+        this.backgroundMusic = this.sound.add('bgm')
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.play();
+
+
     }
     update() {
         let scoreConfig = {
@@ -285,6 +286,13 @@ class Play extends Phaser.Scene {
 
             //update beartrap
             this.beartrap1.update();
+            if(this.p1Score == 250){
+                this.beartrap2 = new Beartrap(this, game.config.width, [[428,182,305]][this.getRandomInt(3)], 'beartrap', 0).setOrigin(0, 0);
+                console.log('beartrap 2')
+            }
+            if(this.p1Score > 250){
+                this.beartrap2.update();
+            }
             if(this.p1Score == 5000){
                 this.addFlying();
                 this.flying.update();
@@ -369,10 +377,11 @@ class Play extends Phaser.Scene {
 
         //click detection
         
-        if(this.input.activePointer.isDown){
-            this.knight.spear.play('attack')
-            this.attackState = true
-            console.log('attack')
+        if(this.input.activePointer.isDown && this.attackState == false){
+            this.knight.spear.play('attack');
+            this.sound.add('atk').play();
+            this.attackState = true;
+            console.log('attack');
         }
         
         this.knight.spear.on('animationcomplete', () => {
@@ -427,12 +436,28 @@ class Play extends Phaser.Scene {
                 this.gameOver = true;
             }
         }
+        if(this.p1Score > 250) {
+            if(this.checkCollision(this.knight, this.beartrap2)){
+                // this.knight.Lives = this.knight.Lives-1/60;
+                // this.healthLeft.text = this.knight.Lives;
+                //this.knight.reset();
+                
+                //this.shipExplode(this.ship03);
+                this.trapFunc(this.beartrap2)
+                console.log('hit beartarap');
+                if(this.knight.Lives == 0){
+                    this.gameOver = true;
+                }
+            }
+        }
         if(this.checkCollision(this.knight,this.monster)) {
+            this.sound.add('dmg').play();
             console.log('hit monster');
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
             if(this.knight.Lives == 0){
+                this.sound.add('die').play();
                 this.gameOver = true;
             }
         }
@@ -443,6 +468,7 @@ class Play extends Phaser.Scene {
         if(this.checkSpearCollision(this.spearX,this.spearY,this.monster) && this.attackState) {
             console.log('stabbed monster');
             this.monster.reset();
+            this.sound.add('kill').play();
         }
 
         if(keyR.isDown){
@@ -517,6 +543,7 @@ class Play extends Phaser.Scene {
         this.knight.Lives -= 1;
         this.healthLeft.text = Math.floor(this.knight.Lives);
         if(this.knight.Lives == 0){
+            this.sound.add('die').play();
             this.gameOver = true;
         }
     }

@@ -4,7 +4,7 @@ class Monster extends Phaser.GameObjects.Container{
         this.body = scene.add.sprite(-40, -100, 'monster').setOrigin(0, 0);
         //new Phaser.GameObjects.Rectangle(scene, 0, -5, 10, 10, 0x0000FF);
         this.add(this.body);
-        this.moveSpeed = 1.5;
+        this.moveSpeed = 3;
         this.width = 80;
         this.height = 80;
     }

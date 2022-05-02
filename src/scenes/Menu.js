@@ -13,7 +13,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('atk','./asset/Audio/stab.wav')
         this.load.audio('switch','./asset/Audio/switch_lanes.wav')
         this.load.audio('dmg','./asset/Audio/take_damage.wav')
-        this.load.audio('bgm','./asset/Audio/possible_bgm_2.wav')
+        this.load.audio('bgm','./asset/Audio/possible_bgm.wav')
     }
     create() {
 

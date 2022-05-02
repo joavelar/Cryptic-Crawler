@@ -2,7 +2,7 @@ class Flying extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture)
         scene.add.existing(this);
-        this.moveSpeed = 4;
+        this.moveSpeed = 6;
         this.scale = 0.5;
         this.baseY = y;
     }
