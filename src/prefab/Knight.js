@@ -4,6 +4,7 @@ class Knight extends Phaser.GameObjects.Container {
         this.isSwinging = false;    //swinging weapon
         this.isJumping = false;     //Player jumped
         this.isFalling = false;     //Player fell
+        this.playAtkSound = false; // setting up sound flags
         this.lane = 0;
         this.maxLives = 3; 
         this.Lives = 3;               //set lives to 3
@@ -17,8 +18,8 @@ class Knight extends Phaser.GameObjects.Container {
         this.width = 50;
         this.height = 50;
         
+        //define appropriate sfx
         this.sfx = scene.sound.add('switch')
-
         
         // Spears used to debug the mouse pointer code
 
@@ -54,13 +55,13 @@ class Knight extends Phaser.GameObjects.Container {
                 this.isJumping = true;
                 this.lane = this.y - 123;
                 console.log(this.y);
-                this.sfx.play()
+                this.sfx.play();
     
             }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
                 this.isFalling = true
                 this.lane = this.y + 123;
                 console.log(this.y)
-                this.sfx.play()
+                this.sfx.play();
             }
         }
         if(this.isJumping){
@@ -77,17 +78,6 @@ class Knight extends Phaser.GameObjects.Container {
                 this.y += 4.1
             }  
         }
-
-        // if(Phaser.Input.Keyboard.JustDown(keyW) && this.y >= 193) {//&& this.y == 438
-        //     this.y -= 20;
-        //     console.log(this.y);
-        //     this.sfx.play()
-
-        // }else if (Phaser.Input.Keyboard.JustDown(keyS) && this.y <= 437) {
-        //     this.y += 20;
-        //     console.log(this.y)
-        //     this.sfx.play()
-        // }
 
 
         //Spear turning (math from http://phaser.io/examples/v3/view/actions/rotate-container-facing-point)

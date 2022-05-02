@@ -23,6 +23,7 @@ class Menu extends Phaser.Scene {
         //define the w key
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
 
+
         //placeholder skip past menu into playscene
         this.scene.start("playScene");
     }

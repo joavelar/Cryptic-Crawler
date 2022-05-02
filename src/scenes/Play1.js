@@ -54,6 +54,7 @@ class Play extends Phaser.Scene {
         //load life pickup
         this.load.spritesheet('pickUp', './asset/UserInt/LifePickup.png',{frameWidth: 64,
             frameHeight: 64, startFrame: 0, endFrame:4});
+        
     }
 
     getRandomInt(max) {//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -70,6 +71,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //configuration code for audio
+        let musicConfig = {
+            volume: 0.5,
+        }
+
         //game over flag
         this.gameOver = false;
         //place tile sprite
@@ -262,10 +268,25 @@ class Play extends Phaser.Scene {
         this.backgroundMusic = this.sound.add('bgm')
         this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
+        //create 
+        this.isAttacking = false;
+        if (this.isAttacking == false){
+            this.input.on('pointerdown', ()=> {
+                this.knight.spear.play('attack')
+                this.sound.play('atk')    
+            })   
+        }
 
 
     }
     update() {
+
+        //checking if attack is done or not.
+        if(this.knight.spear.isPlaying){
+            this.isAttacking = true;
+        } else {
+            this.isAttacking = false;
+        }
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -332,6 +353,7 @@ class Play extends Phaser.Scene {
                 }else{
                     this.lifePoint2.play('deathPoint');
                     this.lifePoint2Played = true;
+                    ;
                 }            
             });
         }else{
@@ -345,6 +367,7 @@ class Play extends Phaser.Scene {
                 }else{
                     this.lifePoint3.play('deathPoint');
                     this.lifePoint3Played = true;
+                    ;
                 }            
             });
         }else{
@@ -384,6 +407,7 @@ class Play extends Phaser.Scene {
             console.log('attack');
         }
         
+
         this.knight.spear.on('animationcomplete', () => {
             this.knight.spear.play('idle');
             this.attackState = false;   
@@ -456,6 +480,7 @@ class Play extends Phaser.Scene {
             this.knight.Lives -= 1;
             this.healthLeft.text = this.knight.Lives
             this.monster.reset();
+            this.sound.play('dmg')
             if(this.knight.Lives == 0){
                 this.sound.add('die').play();
                 this.gameOver = true;
