@@ -69,6 +69,12 @@ class Play extends Phaser.Scene {
         console.log('fwidth:', this.flying.width);
 
     }
+    spawnLife(){
+        let Lanes = [383,147,270];
+        this.LP = new Life(this, game.config.width, Lanes[this.getRandomInt(3)]+20, 'pickUp')
+        this.LP.here = true;
+        this.LP.anims.play('pickUpPoint');
+    }
 
     create() {
         //configuration code for audio
@@ -450,6 +456,22 @@ class Play extends Phaser.Scene {
                 this.knight.maxLives -= 1;
             }
             
+        }
+
+        // check colliosion for given life
+        if((this.p1Score != 0)&&(this.p1Score % 1000 == 0)){
+            //call func to drop fireball
+            this.spawnLife();
+        }
+        if(this.p1Score > 1000 && this.LP.here == true){
+            if(this.checkCollision(this.knight, this.LP)){
+                this.LP.destroy();
+                this.LP.here = false
+                if(this.knight.Lives < this.knight.maxLives){
+                    this.knight.Lives += 1;
+                }
+            }
+            this.LP.update();
         }
 
         //check collision with obstacle
