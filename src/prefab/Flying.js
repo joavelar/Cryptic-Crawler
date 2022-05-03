@@ -14,7 +14,7 @@ class Flying extends Phaser.GameObjects.Sprite {
       }
 
     update() {
-        let Lanes = [383,147,270];
+        let Lanes = [403,167,290];
         // move left and sin wave
         this.x -= this.moveSpeed;
         this.y = this.baseY + Math.sin(this.x/60)*30;
@@ -27,7 +27,7 @@ class Flying extends Phaser.GameObjects.Sprite {
 
     //position reset
     reset() {
-        let Lanes = [383,147,270];
+        let Lanes = [403,167,290];
         this.baseY = Lanes[this.getRandomInt(3)]-10;
         this.x = game.config.width;
     }
