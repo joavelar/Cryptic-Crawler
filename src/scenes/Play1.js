@@ -447,7 +447,7 @@ class Play extends Phaser.Scene {
         
         //console.log(this.p1Score)
         this.scoreLeft.text = this.p1Score;
-        if(this.p1Score > 15000 && this.knight.maxLives == 3){
+        if(this.p1Score > 5000 && this.knight.maxLives == 3){
             if(this.knight.Lives == 3){
                 this.knight.maxLives -= 1;
                 this.knight.Lives -= 1;
@@ -469,6 +469,12 @@ class Play extends Phaser.Scene {
                 this.LP.here = false
                 if(this.knight.Lives < this.knight.maxLives){
                     this.knight.Lives += 1;
+                    if(this.knight.Lives == 2){
+                        this.lifePoint2Played=false;
+                    }
+                    if(this.knight.Lives == 3){
+                        this.lifePoint3Played = false;
+                    }
                 }
             }
             this.LP.update();
