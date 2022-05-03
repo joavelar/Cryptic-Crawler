@@ -73,6 +73,7 @@ class Play extends Phaser.Scene {
         let Lanes = [383,147,270];
         this.LP = new Life(this, game.config.width, Lanes[this.getRandomInt(3)]+20, 'pickUp')
         this.LP.here = true;
+        this.LifeP = true;
         this.LP.anims.play('pickUpPoint');
     }
 
@@ -285,6 +286,7 @@ class Play extends Phaser.Scene {
                 this.knight.spear.play('attack')
             });   
         }
+        this.LifeP =false;
 
 
     }
@@ -463,10 +465,11 @@ class Play extends Phaser.Scene {
             //call func to drop fireball
             this.spawnLife();
         }
-        if(this.p1Score > 5000 && this.LP.here == true){
+        if(this.p1Score > 5000 && this.LifeP == true && this.LP.here == true){
             if(this.checkCollision(this.knight, this.LP)){
                 this.LP.destroy();
-                this.LP.here = false
+                this.LP.here = false;
+                this.LifeP = false;
                 if(this.knight.Lives < this.knight.maxLives){
                     this.knight.Lives += 1;
                     if(this.knight.Lives == 2){
