@@ -459,11 +459,11 @@ class Play extends Phaser.Scene {
         }
 
         // check colliosion for given life
-        if((this.p1Score != 0)&&(this.p1Score % 1000 == 0)){
+        if((this.p1Score != 0)&&(this.p1Score % 5000 == 0)){
             //call func to drop fireball
             this.spawnLife();
         }
-        if(this.p1Score > 1000 && this.LP.here == true){
+        if(this.p1Score > 5000 && this.LP.here == true){
             if(this.checkCollision(this.knight, this.LP)){
                 this.LP.destroy();
                 this.LP.here = false
